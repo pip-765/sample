@@ -1,0 +1,38 @@
+version: "3"
+
+services:
+  sso:
+    image: sample-keycloak
+    container_name: sso.sample-fb.zzzzzzzz.internal
+    networks:
+      - sample
+    ports: 
+      - 8080:8080
+      - 8787:8787
+    restart: always
+    
+  app:
+    image: sample-httpd-oidc
+    container_name: app.sample-fb.zzzzzzzz.internal
+    networks:
+      - sample
+#    ports:
+#      - 80:80
+    restart: always
+    depends_on:
+      - sso
+  lb:
+    image: sample-lb-dev
+    container_name: sample-lb-dev
+    networks:
+      - sample
+    ports:
+      - 80:80
+    restart: always
+    depends_on:
+      - sso
+      - app
+
+networks:
+  sample:
+  
