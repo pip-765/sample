@@ -3,6 +3,9 @@
 ###
 FROM quay.io/keycloak/keycloak:19.0.1 as builder
 
+## extentions
+ADD *.jar /opt/keycloak/providers/
+
 RUN /opt/keycloak/bin/kc.sh build
 
 ###
@@ -14,8 +17,9 @@ ENV KC_HTTP_PORT=8080
 ENV KEYCLOAK_ADMIN=admin
 ENV KEYCLOAK_ADMIN_PASSWORD=password
 
-COPY --from=builder /opt/keycloak/lib/quarkus/ /opt/keycloak/lib/quarkus/
-COPY --from=builder /opt/keycloak/providers/   /opt/keycloak/providers/
+#COPY --from=builder /opt/keycloak/lib/quarkus/ /opt/keycloak/lib/quarkus/
+#COPY --from=builder /opt/keycloak/providers/   /opt/keycloak/providers/
+COPY --from=builder /opt/keycloak/  /opt/keycloak/
 WORKDIR /opt/keycloak
 
 USER root
@@ -32,7 +36,8 @@ ADD export.json /opt/keycloak/import/
 RUN /opt/keycloak/bin/kc.sh import --file /opt/keycloak/import/export.json
 
 ## log
-RUN mkdir -p /opt/keycloak/logs
+#RUN mkdir -p /opt/keycloak/logs
 
-## é¿çs
+## ÂÆüË°å
 ENTRYPOINT ["/opt/keycloak/bin/kc.sh", "start-dev"]
+
