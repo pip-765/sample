@@ -1,12 +1,26 @@
 ###
+# compile
+###
+FROM openjdk:11.0.16-jdk as compiler
+
+WORKDIR /tmp
+
+RUN git clone https://github.com/pip-765/sample-keycloak-ex.git
+
+RUN cd sample-keycloak-ex && chmod 755 gradlew && ./gradlew build
+
+
+###
 # build
 ###
 FROM quay.io/keycloak/keycloak:19.0.1 as builder
 
 ## extentions
-ADD *.jar /opt/keycloak/providers/
+#ADD *.jar /opt/keycloak/providers/
+COPY --from=compiler /tmp/sample-keycloak-ex/lib/build/libs/*.jar  /opt/keycloak/providers/
 
 RUN /opt/keycloak/bin/kc.sh build
+
 
 ###
 # exec
