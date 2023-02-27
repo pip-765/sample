@@ -1998,8 +1998,7 @@
     "cibaExpiresIn" : "120",
     "oauth2DeviceCodeLifespan" : "600",
     "parRequestUriLifespan" : "60",
-    "clientSessionMaxLifespan" : "0",
-    "frontendUrl" : "http://sso.sample-fb.zzzzzzzz.com"
+    "clientSessionMaxLifespan" : "0"
   },
   "keycloakVersion" : "19.0.1",
   "userManagedAccessAllowed" : false,
