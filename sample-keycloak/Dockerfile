@@ -15,6 +15,9 @@ RUN cd sample-keycloak-ex && chmod 755 gradlew && ./gradlew build
 ###
 FROM quay.io/keycloak/keycloak:19.0.1 as builder
 
+## configurations
+ADD keycloak.conf /opt/keycloak/conf/
+
 ## extentions
 #ADD *.jar /opt/keycloak/providers/
 COPY --from=compiler /tmp/sample-keycloak-ex/lib/build/libs/*.jar  /opt/keycloak/providers/
@@ -42,6 +45,9 @@ USER root
 ## timezone
 RUN microdnf install -y tzdata
 RUN ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
+
+## nslookup
+RUN microdnf install -y bind-utils
 
 RUN microdnf clean all
 
