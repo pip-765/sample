@@ -10,10 +10,10 @@ docker run -d -p 80:8080 --add-host=keycloakdb.sample-fb.zzzzzzzz.internal:192.1
 
 
 管理コンソール
-http://sso.sample-fb.zzzzzzzz.com
+https://sso.sample-fb.zzzzzzzz.com/admin
 
 アプリアクセス
-http://app.sample-fb.zzzzzzzz.com/auth
+https://app.sample-fb.zzzzzzzz.com/auth
 
 トークン発行
 curl -X POST http://localhost:18080/realms/sample/protocol/openid-connect/token -d "grant_type=password&client_id=sample-client&client_secret=oCBp0Oxbe4a6ji4vUvNsboqr7GkuGKba&username=u001&password=password" | jq .

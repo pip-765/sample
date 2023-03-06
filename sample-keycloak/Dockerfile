@@ -43,12 +43,13 @@ WORKDIR /opt/keycloak
 USER root
 
 ## install RPMs
-## timezone
+# timezone
 RUN microdnf install -y tzdata
 RUN ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
-
-## nslookup
+# nslookup
 RUN microdnf install -y bind-utils
+# vi
+RUN microdnf install -y vi
 
 RUN microdnf clean all
 
@@ -60,5 +61,5 @@ RUN microdnf clean all
 #RUN mkdir -p /opt/keycloak/logs
 
 ## 実行
-ENTRYPOINT ["/opt/keycloak/bin/kc.sh", "start-dev"]
+ENTRYPOINT ["/opt/keycloak/bin/kc.sh", "start"]
 

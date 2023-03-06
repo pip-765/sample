@@ -33,4 +33,5 @@ ADD htdocs/auth   /var/www/html/auth/
 RUN ln -s /dev/stdout /var/log/httpd/error_log
 
 # 実行
+WORKDIR /etc/httpd
 CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]
