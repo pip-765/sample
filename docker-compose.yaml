@@ -1,20 +1,34 @@
 version: "3"
 
 services:
-  sample-sso:
+  sample-sso1:
     image: sample-keycloak
-    container_name: sample-sso
+    container_name: sample-sso1
     networks:
       sample:
         aliases:
           - sso.sample-fb.zzzzzzzz.internal
     ports: 
-      - 8080:8080
-      - 8787:8787
+      - 18080:8080
+      - 18787:8787
     restart: always
     extra_hosts:
       - "keycloakdb.sample-fb.zzzzzzzz.internal:192.168.65.2"
     
+  sample-sso2:
+    image: sample-keycloak
+    container_name: sample-sso2
+    networks:
+      sample:
+        aliases:
+          - sso.sample-fb.zzzzzzzz.internal
+    ports: 
+      - 28080:8080
+      - 28787:8787
+    restart: always
+    extra_hosts:
+      - "keycloakdb.sample-fb.zzzzzzzz.internal:192.168.65.2"
+
   sample-app:
     image: sample-httpd-oidc
     container_name: sample-app
@@ -24,7 +38,9 @@ services:
 #      - 80:80
     restart: always
     depends_on:
-      - sample-sso
+      - sample-sso1
+      - sample-sso2
+
   sample-lb:
     image: sample-lb-dev
     container_name: sample-lb-dev
@@ -34,7 +50,8 @@ services:
       - 80:80
     restart: always
     depends_on:
-      - sample-sso
+      - sample-sso1
+      - sample-sso2
       - sample-app
 
 networks:

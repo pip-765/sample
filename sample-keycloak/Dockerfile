@@ -16,7 +16,8 @@ RUN cd sample-keycloak-ex && chmod 755 gradlew && ./gradlew build
 FROM quay.io/keycloak/keycloak:19.0.1 as builder
 
 ## configurations
-ADD keycloak.conf /opt/keycloak/conf/
+ADD keycloak.conf  /opt/keycloak/conf/
+ADD cache-ispn.xml /opt/keycloak/conf/
 
 ## extentions
 #ADD *.jar /opt/keycloak/providers/
@@ -52,8 +53,8 @@ RUN microdnf install -y bind-utils
 RUN microdnf clean all
 
 ## import 
-ADD export.json /opt/keycloak/import/
-RUN /opt/keycloak/bin/kc.sh import --file /opt/keycloak/import/export.json
+#ADD export.json /opt/keycloak/import/
+#RUN /opt/keycloak/bin/kc.sh import --file /opt/keycloak/import/export.json
 
 ## log
 #RUN mkdir -p /opt/keycloak/logs
