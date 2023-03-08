@@ -21,7 +21,7 @@
         xsi:schemaLocation="urn:infinispan:config:11.0 http://www.infinispan.org/schemas/infinispan-config-11.0.xsd"
         xmlns="urn:infinispan:config:11.0">
    <jgroups>
-       <stack name="tcp" extends="tcp">
+       <stack name="tcp-ex" extends="tcp">
            <JDBC_PING connection_url="jdbc:postgresql://keycloakdb.sample-fb.zzzzzzzz.internal:5432/keycloak"
                       connection_username="postgres"
                       connection_password="password"
@@ -43,7 +43,7 @@
    </jgroups>
 
     <cache-container name="keycloak">
-        <transport lock-timeout="60000"/>
+        <transport lock-timeout="60000" stack="tcp-ex"/>
         <local-cache name="realms">
             <encoding>
                 <key media-type="application/x-java-object"/>
