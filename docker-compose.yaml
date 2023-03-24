@@ -11,6 +11,7 @@ services:
     ports: 
       - 18080:8080
       - 18787:8787
+      - 17800:7800
     restart: always
     extra_hosts:
       - "keycloakdb.sample-fb.zzzzzzzz.internal:192.168.65.2"
@@ -26,6 +27,7 @@ services:
     ports: 
       - 28080:8080
       - 28787:8787
+      - 27800:7800
     restart: always
     extra_hosts:
       - "keycloakdb.sample-fb.zzzzzzzz.internal:192.168.65.2"
