@@ -15,6 +15,8 @@ RUN cd sample-keycloak-ex && chmod 755 gradlew && ./gradlew build
 ###
 FROM quay.io/keycloak/keycloak:19.0.1 as builder
 
+#ENV JAVA_OPTS_APPEND="-Djgroups.dns.query=sso.sample-fb.zzzzzzzz.internal"
+
 ## configurations
 ADD keycloak.conf  /opt/keycloak/conf/
 ADD cache-ispn.xml /opt/keycloak/conf/
@@ -34,6 +36,7 @@ FROM quay.io/keycloak/keycloak:19.0.1
 ENV KC_HTTP_PORT=8080
 ENV KEYCLOAK_ADMIN=admin
 ENV KEYCLOAK_ADMIN_PASSWORD=password
+ENV JAVA_OPTS_APPEND="-Djgroups.dns.query=sso.sample-fb.zzzzzzzz.internal"
 
 #COPY --from=builder /opt/keycloak/lib/quarkus/ /opt/keycloak/lib/quarkus/
 #COPY --from=builder /opt/keycloak/providers/   /opt/keycloak/providers/
