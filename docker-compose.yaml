@@ -15,7 +15,6 @@ services:
     restart: always
     extra_hosts:
       - "keycloakdb.sample-fb.zzzzzzzz.internal:192.168.65.2"
-      - "sso.sample-fb.zzzzzzzz.internal:192.168.65.2"
     
   sample-sso2:
     image: sample-keycloak
@@ -31,7 +30,6 @@ services:
     restart: always
     extra_hosts:
       - "keycloakdb.sample-fb.zzzzzzzz.internal:192.168.65.2"
-      - "sso.sample-fb.zzzzzzzz.internal:192.168.65.2"
 
   sample-app:
     image: sample-httpd-oidc
