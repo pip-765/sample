@@ -53,6 +53,8 @@ RUN ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
 RUN microdnf install -y bind-utils
 # vi
 RUN microdnf install -y vi
+# jq
+RUN microdnf install -y jq
 
 RUN microdnf clean all
 
@@ -61,8 +63,11 @@ RUN microdnf clean all
 #RUN /opt/keycloak/bin/kc.sh import --file /opt/keycloak/import/export.json
 
 ## log
-#RUN mkdir -p /opt/keycloak/logs
+RUN mkdir -p /var/log/keycloak/
 
 ## 実行
-ENTRYPOINT ["/opt/keycloak/bin/kc.sh", "start"]
+ADD entrypoint.sh /root/
+RUN chmod 755 /root/entrypoint.sh
+ENTRYPOINT ["/root/entrypoint.sh"]
+#ENTRYPOINT ["/opt/keycloak/bin/kc.sh", "start"]
 
