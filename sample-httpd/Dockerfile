@@ -7,6 +7,10 @@ WORKDIR /root
 RUN yum install -y net-tools bind-utils
 ## httpd
 RUN yum install -y httpd httpd-devel
+## jq
+RUN curl -L -o /usr/bin/jq https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64 && chmod 755 /usr/bin/jq
+
+RUN yum clean all
 
 # config
 #ADD httpd.conf /etc/httpd/conf/
@@ -18,4 +22,7 @@ ADD htdocs/*        /var/www/html/
 RUN ln -s /dev/stdout /var/log/httpd/error_log
 
 # 実行
-CMD ["/usr/sbin/apachectl", "-D", "FOREGROUND"]
+ADD entrypoint.sh /root/
+RUN chmod 755 /root/entrypoint.sh
+CMD ["/root/entrypoint.sh"]
+#CMD ["/usr/sbin/apachectl", "-D", "FOREGROUND"]

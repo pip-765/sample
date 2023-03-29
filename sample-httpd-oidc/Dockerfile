@@ -19,6 +19,8 @@ RUN yum install -y mod_auth_openidc-2.4.12.3-1.el7.x86_64.rpm
 ## timezone
 RUN yum install -y tzdata
 RUN ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
+## jq
+RUN curl -L -o /usr/bin/jq https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64 && chmod 755 /usr/bin/jq
 
 RUN yum clean all
 
@@ -33,5 +35,8 @@ ADD htdocs/auth   /var/www/html/auth/
 RUN ln -s /dev/stdout /var/log/httpd/error_log
 
 # 実行
+ADD entrypoint.sh /root/
+RUN chmod 755 /root/entrypoint.sh
 WORKDIR /etc/httpd
-CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]
+CMD ["/root/entrypoint.sh"]
+#CMD ["/usr/sbin/apachectl", "-D", "FOREGROUND"]
